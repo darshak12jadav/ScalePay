@@ -6,3 +6,70 @@ generator client {
 datasource db {
   provider = "postgresql"
 }
+
+enum EmploymentStatus {
+  ACTIVE
+  ON_LEAVE
+  INACTIVE
+}
+
+enum Currency {
+  USD
+  EUR
+  GBP
+  INR
+  CAD
+  AUD
+  SGD
+  AED
+  CHF
+}
+
+model Employee {
+  id               String           @id @default(cuid())
+  employeeCode     String           @unique
+  firstName        String
+  lastName         String
+  department       String
+  designation      String
+  country          String
+  employmentStatus EmploymentStatus @default(ACTIVE)
+
+  salaryHistory SalaryHistory[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([department])
+  @@index([country])
+  @@index([designation])
+  @@index([employmentStatus])
+  @@index([lastName, firstName])
+}
+
+model SalaryHistory {
+  id            String    @id @default(cuid())
+  employeeId    String
+  annualSalary  Decimal   @db.Decimal(15, 2)
+  currency      Currency
+  effectiveFrom DateTime
+  effectiveTo   DateTime?
+
+  employee Employee @relation(fields: [employeeId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+
+  @@index([employeeId, effectiveFrom])
+  @@index([employeeId, effectiveTo])
+  @@index([currency])
+  @@index([effectiveFrom])
+}
+
+model ExchangeRate {
+  id        String   @id @default(cuid())
+  currency  Currency @unique
+  rateToUsd Decimal  @db.Decimal(18, 8)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
