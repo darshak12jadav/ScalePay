@@ -1,12 +1,12 @@
-import express from "express";
+import express, { type Application } from "express";
 import cors from "cors";
 import helmet from "helmet";
 import { notFoundHandler } from "./middleware/not-found";
 import { errorHandler } from "./middleware/error-handler";
 
-export const app = express();
+export const app: Application = express();
 
-app.use(helmet());
+app.use(helmet() as unknown as express.RequestHandler);
 app.use(cors());
 app.use(express.json());
 
