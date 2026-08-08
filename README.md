@@ -145,5 +145,7 @@ You should see:
 
 If tsc --noEmit passes and these tests work, consider Salary complete.
 
+ExchangeRate
 
-
+GET /api/exchange-rates curl http://localhost:4000/api/exchange-rates
+GET /api/exchange-rates/:currency curl http://localhost:4000/api/exchange-rates/INR
