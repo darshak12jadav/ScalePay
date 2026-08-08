@@ -13,7 +13,6 @@ export type NavItem = {
 export const primaryNavigation: NavItem[] = [
   { key: 'dashboard', label: 'Dashboard', href: '/', icon: LayoutDashboard },
   { key: 'employees', label: 'Employees', href: '/employees', icon: Users },
-  { key: 'payroll', label: 'Payroll', href: '/payroll', icon: Banknote },
   {
     key: 'exchange-rates',
     label: 'Exchange Rates',

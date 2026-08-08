@@ -95,3 +95,11 @@ export async function createEmployeeWithSalary(
 
   return response.json();
 }
+
+export async function getExchangeRates() {
+  return api.get('/api/exchange-rates');
+}
+
+export async function getExchangeRate(currency: string) {
+  return api.get(`/api/exchange-rates/${currency}`);
+}
