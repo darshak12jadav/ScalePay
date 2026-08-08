@@ -7,6 +7,7 @@ import {
   employeeIdParamSchema,
   getEmployeesQuerySchema,
 } from '../schemas/employee.schema';
+import { salaryRoutes } from '../../salaries/routes/salary.routes';
 
 const router = Router();
 
@@ -32,5 +33,7 @@ router.patch(
 router.delete('/:id', validateParams(employeeIdParamSchema), (req, res, next) =>
   employeeController.deleteEmployee(req, res, next),
 );
+
+router.use('/:id/salary', salaryRoutes);
 
 export { router as employeeRoutes };
