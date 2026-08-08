@@ -9,6 +9,7 @@ import { errorHandler } from './middleware/error-handler';
 
 import { employeeRoutes } from './modules/employees/routes/employee.routes';
 import { exchangeRateRoutes } from './modules/exchange-rates/routes/exchange-rate.routes';
+import { payrollRoutes } from './modules/payroll/routes/payroll.routes';
 
 export const app: Application = express();
 
@@ -35,6 +36,8 @@ app.get('/health', async (_req, res) => {
 app.use('/api/employees', employeeRoutes);
 
 app.use('/api/exchange-rates', exchangeRateRoutes);
+
+app.use('/api/payroll', payrollRoutes);
 
 app.use(notFoundHandler);
 

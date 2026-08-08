@@ -149,3 +149,10 @@ ExchangeRate
 
 GET /api/exchange-rates curl http://localhost:4000/api/exchange-rates
 GET /api/exchange-rates/:currency curl http://localhost:4000/api/exchange-rates/INR
+
+Payroll
+
+curl "http://localhost:4000/api/employees?page=1&pageSize=1"
+curl -X POST http://localhost:4000/api/payroll/calculate \
+-H "Content-Type: application/json" \
+-d '{"employeeId":"EMPLOYEE_ID","currency":"USD"}'
