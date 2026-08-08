@@ -10,6 +10,7 @@ import { errorHandler } from './middleware/error-handler';
 import { employeeRoutes } from './modules/employees/routes/employee.routes';
 import { exchangeRateRoutes } from './modules/exchange-rates/routes/exchange-rate.routes';
 import { payrollRoutes } from './modules/payroll/routes/payroll.routes';
+import { analyticsRoutes } from './modules/analytics/routes/analytics.routes';
 
 export const app: Application = express();
 
@@ -38,6 +39,8 @@ app.use('/api/employees', employeeRoutes);
 app.use('/api/exchange-rates', exchangeRateRoutes);
 
 app.use('/api/payroll', payrollRoutes);
+
+app.use('/api/analytics', analyticsRoutes);
 
 app.use(notFoundHandler);
 

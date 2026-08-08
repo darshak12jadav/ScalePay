@@ -156,3 +156,10 @@ curl "http://localhost:4000/api/employees?page=1&pageSize=1"
 curl -X POST http://localhost:4000/api/payroll/calculate \
 -H "Content-Type: application/json" \
 -d '{"employeeId":"EMPLOYEE_ID","currency":"USD"}'
+
+Analytics
+
+curl http://localhost:4000/api/analytics/summary
+curl http://localhost:4000/api/analytics/by-country
+curl http://localhost:4000/api/analytics/by-department
+curl http://localhost:4000/api/analytics/salary-distribution    
