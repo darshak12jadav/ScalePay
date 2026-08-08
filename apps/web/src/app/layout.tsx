@@ -1,6 +1,8 @@
 import type { Metadata } from 'next';
 import { Geist, Geist_Mono } from 'next/font/google';
+
 import './globals.css';
+
 import { QueryProvider } from '@/components/providers/query-provider';
 
 const geistSans = Geist({
@@ -15,7 +17,7 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: 'ScalePay',
-  description: 'Employee compensation management platform',
+  description: 'Employee salary management platform',
 };
 
 export default function RootLayout({
