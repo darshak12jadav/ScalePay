@@ -19,6 +19,7 @@ export class AnalyticsService {
 
     return salaries
       .map((s) => {
+        if (!s.employee) return null;
         const rate = rates.get(s.currency);
         if (rate === undefined) return null;
         return {
