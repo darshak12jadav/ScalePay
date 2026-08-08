@@ -1,4 +1,5 @@
 import { prisma } from '../../../lib/prisma';
+import { Currency } from '../../../generated/prisma/client';
 
 interface FindManyOptions {
   skip: number;
@@ -150,6 +151,44 @@ export class EmployeeRepository {
   async delete(id: string) {
     return prisma.employee.delete({
       where: { id },
+    });
+  }
+
+  async createWithSalary(
+    employeeData: {
+      employeeCode: string;
+      firstName: string;
+      lastName: string;
+      department: string;
+      designation: string;
+      country: string;
+      employmentStatus?: 'ACTIVE' | 'ON_LEAVE' | 'INACTIVE';
+    },
+    salaryData: {
+      annualSalary: number;
+      currency: Currency;
+      effectiveFrom: Date;
+    },
+  ) {
+    return prisma.$transaction(async (tx) => {
+      const employee = await tx.employee.create({
+        data: employeeData,
+      });
+
+      const salary = await tx.salaryHistory.create({
+        data: {
+          employeeId: employee.id,
+          annualSalary: salaryData.annualSalary,
+          currency: salaryData.currency,
+          effectiveFrom: salaryData.effectiveFrom,
+          effectiveTo: null,
+        },
+      });
+
+      return {
+        employee,
+        salary,
+      };
     });
   }
 }

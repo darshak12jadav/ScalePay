@@ -1,5 +1,7 @@
 import { z } from 'zod';
 
+import { Currency } from '../../../generated/prisma/client';
+
 export const employmentStatusEnum = z.enum(['ACTIVE', 'ON_LEAVE', 'INACTIVE']);
 
 export const createEmployeeSchema = z.object({
@@ -16,6 +18,30 @@ export const createEmployeeSchema = z.object({
   country: z.string().trim().min(1, 'country is required'),
 
   employmentStatus: employmentStatusEnum.optional(),
+});
+
+export const createEmployeeWithSalarySchema = z.object({
+  employeeCode: z.string().trim().min(1, 'employeeCode is required'),
+
+  firstName: z.string().trim().min(1, 'firstName is required'),
+
+  lastName: z.string().trim().min(1, 'lastName is required'),
+
+  department: z.string().trim().min(1, 'department is required'),
+
+  designation: z.string().trim().min(1, 'designation is required'),
+
+  country: z.string().trim().min(1, 'country is required'),
+
+  employmentStatus: employmentStatusEnum.default('ACTIVE'),
+
+  salary: z.object({
+    annualSalary: z.coerce.number().positive('annualSalary must be greater than 0'),
+
+    currency: z.nativeEnum(Currency),
+
+    effectiveFrom: z.string().trim().min(1, 'effectiveFrom is required'),
+  }),
 });
 
 export const updateEmployeeSchema = z
@@ -56,3 +82,5 @@ export type GetEmployeesQuery = z.infer<typeof getEmployeesQuerySchema>;
 export type CreateEmployeeInput = z.infer<typeof createEmployeeSchema>;
 
 export type UpdateEmployeeInput = z.infer<typeof updateEmployeeSchema>;
+
+export type CreateEmployeeWithSalaryInput = z.infer<typeof createEmployeeWithSalarySchema>;

@@ -41,5 +41,18 @@ export class EmployeeController {
       next(error);
     }
   }
+
+  async createEmployeeWithSalary(req: Request, res: Response, next: NextFunction) {
+    try {
+      const result = await employeeService.createEmployeeWithSalary(req.body);
+
+      res.status(201).json({
+        data: result,
+        message: 'Employee created successfully',
+      });
+    } catch (error) {
+      next(error);
+    }
+  }
 }
 export const employeeController = new EmployeeController();

@@ -1,3 +1,5 @@
-export default function EmployeeDetailsPage() {
-  return null;
+import EmployeeDetailsPage from '@/components/employees/employee-details-page';
+
+export default function Page() {
+  return <EmployeeDetailsPage />;
 }

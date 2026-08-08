@@ -1,6 +1,7 @@
 import { EmployeeRepository } from '../repositories/employee.repository';
 import { NotFoundError, ConflictError } from '../../../shared/errors/app-errors';
 import { GetEmployeesQuery } from '../schemas/employee.schema';
+import { Currency } from '../../../generated/prisma/client';
 
 export class EmployeeService {
   constructor(private readonly employeeRepository: EmployeeRepository) {}
@@ -73,5 +74,43 @@ export class EmployeeService {
   async deleteEmployee(id: string) {
     await this.getEmployee(id);
     await this.employeeRepository.delete(id);
+  }
+
+  async createEmployeeWithSalary(data: {
+    employeeCode: string;
+    firstName: string;
+    lastName: string;
+    department: string;
+    designation: string;
+    country: string;
+    employmentStatus?: 'ACTIVE' | 'ON_LEAVE' | 'INACTIVE';
+    salary: {
+      annualSalary: number;
+      currency: Currency;
+      effectiveFrom: string;
+    };
+  }) {
+    const existingEmployee = await this.employeeRepository.findByEmployeeCode(data.employeeCode);
+
+    if (existingEmployee) {
+      throw new ConflictError('Employee code already exists');
+    }
+
+    return this.employeeRepository.createWithSalary(
+      {
+        employeeCode: data.employeeCode,
+        firstName: data.firstName,
+        lastName: data.lastName,
+        department: data.department,
+        designation: data.designation,
+        country: data.country,
+        employmentStatus: data.employmentStatus,
+      },
+      {
+        annualSalary: data.salary.annualSalary,
+        currency: data.salary.currency,
+        effectiveFrom: new Date(data.salary.effectiveFrom),
+      },
+    );
   }
 }

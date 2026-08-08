@@ -3,6 +3,7 @@ import { employeeController } from '../controllers/employee.controller';
 import { validateBody, validateParams, validateQuery } from '../../../middleware/validate';
 import {
   createEmployeeSchema,
+  createEmployeeWithSalarySchema,
   updateEmployeeSchema,
   employeeIdParamSchema,
   getEmployeesQuerySchema,
@@ -13,6 +14,10 @@ const router = Router();
 
 router.get('/', validateQuery(getEmployeesQuerySchema), (req, res, next) =>
   employeeController.getEmployees(req, res, next),
+);
+
+router.post('/with-salary', validateBody(createEmployeeWithSalarySchema), (req, res, next) =>
+  employeeController.createEmployeeWithSalary(req, res, next),
 );
 
 router.get('/:id', validateParams(employeeIdParamSchema), (req, res, next) =>
