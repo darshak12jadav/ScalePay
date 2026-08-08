@@ -1,165 +1,344 @@
 # ScalePay
 
+ScalePay is an employee salary management platform built for an HR Manager managing approximately 10,000 employees across multiple countries.
+
+The application replaces spreadsheet-based salary management with a searchable web application for employee records, salary history, multi-currency reporting, and organization-level compensation analytics.
+
+## Product Goals
+
+- Manage employee records.
+- Manage current and historical salaries.
+- Preserve salary revisions using effective dates.
+- Support salaries in multiple currencies.
+- Normalize compensation to USD for organization-level analytics using deterministic exchange rates.
+- Provide useful HR analytics.
+- Support approximately 10,000 seeded employees.
+- Maintain production-quality code, tests, documentation, and a clear architecture.
+
+## Core Features
+
+### Employee Management
+
+- List employees with server-side pagination.
+- Search employees.
+- Filter by country, department, designation, and employment status.
+- Create employees.
+- Update employees.
+- Deactivate/delete employees according to the API contract.
+- View employee details.
+
+### Salary Management
+
+- View current salary.
+- Create initial salary.
+- Revise salary with an effective date.
+- Preserve salary history.
+- View salary history.
+- Support multiple currencies.
+
+### Analytics
+
+- Total employee count.
+- Total annual salary cost.
+- Average salary.
+- Median salary where supported by the database/query implementation.
+- Salary distribution.
+- Salary breakdown by country.
+- Salary breakdown by department.
+- Employee counts by country, department, and status.
+
+### Exchange Rates
+
+- List supported exchange rates.
+- Retrieve a rate by currency.
+- Use fixed/deterministic rates for reporting rather than a live FX provider.
+
+## Deliberately Out of Scope
+
+- Authentication and authorization.
+- Payroll processing.
+- Tax calculation.
+- Payslip generation.
+- Benefits and deductions.
+- Attendance and leave management.
+- Employee self-service.
+- Live foreign-exchange integrations.
+- Payroll-provider integrations.
+- Email/notification workflows.
+- Natural-language AI salary querying.
+- Complex role-based access control.
+
+These are excluded to keep the MVP focused on the core salary-management problem and to avoid unnecessary infrastructure complexity.
+
+## Tech Stack
+
+### Backend
+
+- Node.js
+- Express
+- TypeScript
+- PostgreSQL
+- Prisma ORM
+- Zod
+- Vitest
+- Supertest
+
+### Frontend
+
+- Next.js
+- React
+- TypeScript
+- Tailwind CSS
+- shadcn/ui
+- Lucide React
+- React Hook Form
+- Zod
+- Vitest
+- Playwright
+
+### Architecture
+
+- pnpm workspace monorepo
+- Modular monolith backend
+- REST/JSON APIs
+- Repository → Service → Controller → Route layering
+
+## Repository Structure
+
+```text
+ScalePay/
+├── apps/
+│   ├── api/
+│   │   ├── src/
+│   │   │   ├── middleware/
+│   │   │   ├── modules/
+│   │   │   │   ├── employees/
+│   │   │   │   ├── salaries/
+│   │   │   │   ├── analytics/
+│   │   │   │   └── exchange-rates/
+│   │   │   ├── shared/
+│   │   │   ├── app.ts
+│   │   │   └── server.ts
+│   │   ├── tests/
+│   │   └── package.json
+│   └── web/
+│       ├── src/
+│       │   ├── app/
+│       │   ├── components/
+│       │   ├── hooks/
+│       │   ├── lib/
+│       │   └── types/
+│       ├── e2e/
+│       └── package.json
+├── packages/
+│   └── shared/
+├── prisma/
+│   ├── schema.prisma
+│   ├── seed.ts
+│   └── migrations/
+├── docs/
+├── .env.example
+├── package.json
+└── pnpm-workspace.yaml
+```
+
+## Prerequisites
+
+Install:
+
+- Node.js 20+ recommended
+- pnpm
+- PostgreSQL or a hosted PostgreSQL database such as Neon
+
+Verify:
+
+```bash
+node --version
+pnpm --version
+```
+
+## Clone and Install
+
+```bash
+git clone <YOUR_REPOSITORY_URL>
+cd ScalePay
+pnpm install
+```
+
+## Environment Variables
+
+Create the required environment files from the project's examples.
+
+Typical API configuration:
+
+```env
+DATABASE_URL="postgresql://USER:PASSWORD@HOST:5432/DATABASE"
+PORT=4000
+```
+
+Typical frontend configuration:
+
+```env
+NEXT_PUBLIC_API_URL="http://localhost:4000"
+```
+
+Do not commit real secrets.
+
+## Database Setup
+
+Validate Prisma:
+
+```bash
 pnpm exec prisma validate
+```
 
+Format the schema:
+
+```bash
 pnpm exec prisma format
+```
 
+Generate the Prisma client:
+
+```bash
 pnpm prisma generate
+```
 
+Run migrations:
+
+```bash
 pnpm prisma migrate dev --name init
+```
 
+Open Prisma Studio:
+
+```bash
 pnpm --filter api exec prisma studio
+```
 
+Seed the database:
+
+```bash
 pnpm --filter api db:seed
+```
 
-# health
+The seed script creates approximately 10,000 employees and related salary/reference data required by the application.
 
+## Run Locally
+
+Start the API:
+
+```bash
+pnpm --filter api dev
+```
+
+Start the web application:
+
+```bash
+pnpm --filter web dev
+```
+
+Expected API:
+
+```text
+http://localhost:4000
+```
+
+Expected frontend:
+
+```text
+http://localhost:3000
+```
+
+## Health Check
+
+```bash
 curl http://localhost:4000/health
+```
 
-# list (paginated)
+Expected response indicates API and database health.
 
-curl "http://localhost:4000/api/employees?page=1&pageSize=10"
+## Testing
 
-# search
+Run all tests using the repository's configured scripts.
 
-curl "http://localhost:4000/api/employees?search=Patel"
+API unit/integration tests use Vitest and Supertest.
 
-# filter
+Frontend tests use Vitest.
 
-curl "http://localhost:4000/api/employees?country=India&department=Engineering&employmentStatus=ACTIVE"
+End-to-end tests use Playwright.
 
-# sort
+Example:
 
-curl "http://localhost:4000/api/employees?sortBy=firstName&sortOrder=asc"
+```bash
+pnpm test
+```
 
-# get by id
+If the repository exposes package-specific scripts:
 
-curl http://localhost:4000/api/employees/<id>
+```bash
+pnpm --filter api test
+pnpm --filter web test
+pnpm --filter web test:e2e
+```
 
-# create
+## Production Readiness Checks
 
-curl -X POST http://localhost:4000/api/employees \
--H "Content-Type: application/json" \
--d '{"employeeCode":"TEST-001","firstName":"Test","lastName":"User","department":"Engineering","designation":"Software Engineer","country":"India"}'
+Before submission:
 
-# create duplicate (should 409)
+```bash
+pnpm exec prisma validate
+pnpm prisma generate
+pnpm test
+```
 
-curl -X POST http://localhost:4000/api/employees \
--H "Content-Type: application/json" \
--d '{"employeeCode":"TEST-001","firstName":"Test","lastName":"User","department":"Engineering","designation":"Software Engineer","country":"India"}'
+Also verify:
 
-# update
+- TypeScript compilation.
+- API startup.
+- Frontend startup.
+- Database migrations.
+- Seed execution.
+- Employee CRUD.
+- Salary creation/revision/history.
+- Exchange-rate APIs.
+- Analytics.
+- Critical UI flows.
 
-curl -X PATCH http://localhost:4000/api/employees/<id> \
--H "Content-Type: application/json" \
--d '{"department":"Product"}'
+## Demo
 
-# delete
+Add the final deployed URL here:
 
-curl -X DELETE http://localhost:4000/api/employees/<id>
+```text
+Production: <DEPLOYED_URL>
+```
 
-# not found (should 404)
+Add the demo video here:
 
-curl http://localhost:4000/api/employees/does-not-exist
+```text
+Demo: <VIDEO_URL>
+```
 
-Yes — this Salary module is acceptable for the Incubyte assessment, and I would proceed with it.
+## Engineering Principles
 
-But I would not call it literally 100% production-proof. There are two small improvements I'd make before considering it final:
+ScalePay deliberately uses a modular monolith rather than microservices. Approximately 10,000 employees do not justify distributed-system complexity.
 
-What is already correct
-BadRequestError → 400
-NotFoundError → 404
-Employee existence checked before salary operations
-Zod validation for salary input
-Currency restricted to your Prisma-supported currencies
-effectiveTo controlled by the server
-Salary revisions are transactional
-Previous salary is automatically closed
-Salary history is read-only through the API
-No arbitrary PATCH/DELETE of historical salary records
+The database remains the source of truth. PostgreSQL handles filtering and aggregation. The browser receives paginated employee data rather than the entire employee population.
 
-Nested routes are clean:
+AI tools were used to accelerate exploration, implementation, testing, debugging, and documentation. Final engineering decisions, correctness, testing, and review remain the responsibility of the engineer.
 
-GET /api/employees/:id/salary
-GET /api/employees/:id/salary/history
-POST /api/employees/:id/salary
-Repository → Service → Controller → Route separation is maintained.
-One improvement I recommend
+## Assessment Context
 
-Your current service checks only the current salary:
+This project was built as part of the Incubyte Software Craftsperson assessment.
 
-const currentSalary =
-await this.salaryRepository.findCurrentSalary(employeeId);
+The implementation prioritizes:
 
-For a stronger implementation, the service should also protect against historical-date overlaps if the database somehow contains inconsistent history.
-
-Also, your repository's:
-
-effectiveTo.setDate(effectiveTo.getDate() - 1);
-
-works for the assessment, but dates/timezones deserve a little care in a real payroll system.
-
-Neither issue prevents you from proceeding with the assessment.
-
-My recommendation
-
-Don't keep changing this module unnecessarily. Get it compiling and test it.
-
-Run:
-
-cd apps/api
-pnpm exec tsc --noEmit
-
-Then:
-
-pnpm dev
-
-Test:
-
-curl "http://localhost:4000/api/employees?page=1&pageSize=1"
-
-Take an employee ID and test:
-
-curl -X POST "http://localhost:4000/api/employees/EMPLOYEE_ID/salary" \
--H "Content-Type: application/json" \
--d '{"annualSalary":75000,"currency":"USD","effectiveFrom":"2026-01-01"}'
-
-Then:
-
-curl "http://localhost:4000/api/employees/EMPLOYEE_ID/salary"
-
-Then revise:
-
-curl -X POST "http://localhost:4000/api/employees/EMPLOYEE_ID/salary" \
--H "Content-Type: application/json" \
--d '{"annualSalary":90000,"currency":"USD","effectiveFrom":"2027-01-01"}'
-
-Finally:
-
-curl "http://localhost:4000/api/employees/EMPLOYEE_ID/salary/history"
-
-You should see:
-
-2027-01-01 → null
-2026-01-01 → 2026-12-31
-
-If tsc --noEmit passes and these tests work, consider Salary complete.
-
-ExchangeRate
-
-GET /api/exchange-rates curl http://localhost:4000/api/exchange-rates
-GET /api/exchange-rates/:currency curl http://localhost:4000/api/exchange-rates/INR
-
-Payroll
-
-curl "http://localhost:4000/api/employees?page=1&pageSize=1"
-curl -X POST http://localhost:4000/api/payroll/calculate \
--H "Content-Type: application/json" \
--d '{"employeeId":"EMPLOYEE_ID","currency":"USD"}'
-
-Analytics
-
-curl http://localhost:4000/api/analytics/summary
-curl http://localhost:4000/api/analytics/by-country
-curl http://localhost:4000/api/analytics/by-department
-curl http://localhost:4000/api/analytics/salary-distribution    
+- clarity of thought
+- structured problem solving
+- engineering fundamentals
+- product thinking
+- maintainability
+- meaningful tests
+- intentional AI usage
+- incremental commits
+- pragmatic architecture

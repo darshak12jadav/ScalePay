@@ -57,7 +57,6 @@ export function AppShell({ children, title, breadcrumbs }: AppShellProps) {
           mobileNavOpen={mobileNavOpen}
           onMobileNavChange={setMobileNavOpen}
           onNavigate={handleNavigate}
-          showSearch={showSearch}
         />
 
         <main className="flex-1 px-4 py-6 md:px-6 lg:px-8">
