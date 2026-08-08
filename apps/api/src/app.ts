@@ -1,9 +1,13 @@
 import express, { type Application } from 'express';
 import cors from 'cors';
 import helmet from 'helmet';
+
+import { prisma } from './lib/prisma';
+
 import { notFoundHandler } from './middleware/not-found';
 import { errorHandler } from './middleware/error-handler';
-import { prisma } from './lib/prisma';
+
+import { employeeRoutes } from './modules/employees/routes/employee.routes';
 
 export const app: Application = express();
 
@@ -27,5 +31,8 @@ app.get('/health', async (_req, res) => {
   }
 });
 
+app.use('/api/employees', employeeRoutes);
+
 app.use(notFoundHandler);
+
 app.use(errorHandler);

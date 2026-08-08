@@ -67,6 +67,18 @@ const EXCHANGE_RATES: Record<Currency, number> = {
   CHF: 1.12,
 };
 
+const SALARY_RANGES: Record<Currency, { min: number; max: number }> = {
+  USD: { min: 45000, max: 220000 },
+  EUR: { min: 40000, max: 190000 },
+  GBP: { min: 35000, max: 170000 },
+  INR: { min: 600000, max: 4500000 },
+  CAD: { min: 55000, max: 230000 },
+  AUD: { min: 60000, max: 240000 },
+  SGD: { min: 55000, max: 230000 },
+  AED: { min: 150000, max: 750000 },
+  CHF: { min: 60000, max: 250000 },
+};
+
 const FIRST_NAMES = [
   'Aarav',
   'Arjun',
@@ -99,8 +111,10 @@ function randomItem<T>(items: T[]): T {
   return items[Math.floor(Math.random() * items.length)];
 }
 
-function randomSalary(): number {
-  return Math.floor(Math.random() * 140000) + 30000;
+function randomSalary(currency: Currency): number {
+  const { min, max } = SALARY_RANGES[currency];
+
+  return Math.floor(Math.random() * (max - min)) + min;
 }
 
 async function main() {
@@ -143,13 +157,14 @@ async function main() {
     },
   });
 
+  // Current salary for every employee
   await prisma.salaryHistory.createMany({
     data: createdEmployees.map((employee) => {
       const currency = randomItem(CURRENCIES);
 
       return {
         employeeId: employee.id,
-        annualSalary: randomSalary(),
+        annualSalary: randomSalary(currency),
         currency,
         effectiveFrom: new Date('2026-01-01'),
         effectiveTo: null,
@@ -157,8 +172,29 @@ async function main() {
     }),
   });
 
+  // Historical salary records for approximately 20% of employees
+  const HISTORY_SAMPLE_RATIO = 0.2;
+
+  const employeesWithHistory = createdEmployees.filter(() => Math.random() < HISTORY_SAMPLE_RATIO);
+
+  await prisma.salaryHistory.createMany({
+    data: employeesWithHistory.map((employee) => {
+      const currency = randomItem(CURRENCIES);
+      const currentSalary = randomSalary(currency);
+
+      return {
+        employeeId: employee.id,
+        annualSalary: Math.floor(currentSalary * 0.85),
+        currency,
+        effectiveFrom: new Date('2025-01-01'),
+        effectiveTo: new Date('2025-12-31'),
+      };
+    }),
+  });
+
   console.log('Seed completed successfully.');
   console.log(`Employees: ${createdEmployees.length}`);
+  console.log(`Salary records: ${createdEmployees.length + employeesWithHistory.length}`);
 }
 
 main()
