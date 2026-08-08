@@ -9,7 +9,8 @@
     "format": "prettier --write .",
     "format:check": "prettier --check .",
     "test": "pnpm --filter api test && pnpm --filter web test",
-    "lint": "pnpm --filter web lint"
+    "lint": "pnpm --filter web lint",
+    "typecheck": "pnpm --filter api typecheck && pnpm --filter web typecheck"
   },
   "keywords": [],
   "author": "",
