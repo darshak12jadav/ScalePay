@@ -310,7 +310,7 @@ Also verify:
 Add the final deployed URL here:
 
 ```text
-Production: https://scale-pay-web.vercel.app/
+https://scale-pay-web.vercel.app/
 ```
 
 Add the demo video here:
