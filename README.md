@@ -316,7 +316,7 @@ Production: https://scale-pay-web.vercel.app/
 Add the demo video here:
 
 ```text
-Demo: https://drive.google.com/file/d/1rQC7ZSp5AAQLiFaoNAqfiZuGt8cHbHl0/view?usp=sharing
+https://drive.google.com/file/d/1rQC7ZSp5AAQLiFaoNAqfiZuGt8cHbHl0/view?usp=sharing
 ```
 
 Add the demo Images here:
