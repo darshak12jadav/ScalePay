@@ -2,15 +2,15 @@ import express, { type Application } from 'express';
 import cors from 'cors';
 import helmet from 'helmet';
 
-import { prisma } from './lib/prisma';
+import { prisma } from './lib/prisma.js';
 
-import { notFoundHandler } from './middleware/not-found';
-import { errorHandler } from './middleware/error-handler';
+import { notFoundHandler } from './middleware/not-found.js';
+import { errorHandler } from './middleware/error-handler.js';
 
-import { employeeRoutes } from './modules/employees/routes/employee.routes';
-import { exchangeRateRoutes } from './modules/exchange-rates/routes/exchange-rate.routes';
-import { payrollRoutes } from './modules/payroll/routes/payroll.routes';
-import { analyticsRoutes } from './modules/analytics/routes/analytics.routes';
+import { employeeRoutes } from './modules/employees/routes/employee.routes.js';
+import { exchangeRateRoutes } from './modules/exchange-rates/routes/exchange-rate.routes.js';
+import { payrollRoutes } from './modules/payroll/routes/payroll.routes.js';
+import { analyticsRoutes } from './modules/analytics/routes/analytics.routes.js';
 
 export const app: Application = express();
 

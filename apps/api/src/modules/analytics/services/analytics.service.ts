@@ -1,4 +1,4 @@
-import { AnalyticsRepository } from '../repositories/analytics.repository';
+import { AnalyticsRepository } from '../repositories/analytics.repository.js';
 
 interface SalaryUsdRow {
   salaryUsd: number;

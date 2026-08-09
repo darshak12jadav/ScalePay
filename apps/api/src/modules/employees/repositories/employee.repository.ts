@@ -1,5 +1,5 @@
-import { prisma } from '../../../lib/prisma';
-import { Currency } from '../../../generated/prisma/client';
+import { prisma } from '../../../lib/prisma.js';
+import { Currency } from '../../../generated/prisma/client.js';
 
 interface FindManyOptions {
   skip: number;

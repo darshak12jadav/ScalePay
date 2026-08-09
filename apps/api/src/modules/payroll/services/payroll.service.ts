@@ -1,9 +1,9 @@
-import { EmployeeRepository } from '../../employees/repositories/employee.repository';
-import { SalaryRepository } from '../../salaries/repositories/salary.repository';
-import { ExchangeRateRepository } from '../../exchange-rates/repositories/exchange-rate.repository';
-import { NotFoundError } from '../../../shared/errors/app-errors';
-import { CalculatePayrollInput } from '../schemas/payroll.schema';
-import { Currency } from '../../../generated/prisma/client';
+import { EmployeeRepository } from '../../employees/repositories/employee.repository.js';
+import { SalaryRepository } from '../../salaries/repositories/salary.repository.js';
+import { ExchangeRateRepository } from '../../exchange-rates/repositories/exchange-rate.repository.js';
+import { NotFoundError } from '../../../shared/errors/app-errors.js';
+import { CalculatePayrollInput } from '../schemas/payroll.schema.js';
+import { Currency } from '../../../generated/prisma/client.js';
 
 export class PayrollService {
   constructor(

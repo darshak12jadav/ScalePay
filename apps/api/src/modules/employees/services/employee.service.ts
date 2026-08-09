@@ -1,7 +1,7 @@
-import { EmployeeRepository } from '../repositories/employee.repository';
-import { NotFoundError, ConflictError } from '../../../shared/errors/app-errors';
-import { GetEmployeesQuery } from '../schemas/employee.schema';
-import { Currency } from '../../../generated/prisma/client';
+import { EmployeeRepository } from '../repositories/employee.repository.js';
+import { NotFoundError, ConflictError } from '../../../shared/errors/app-errors.js';
+import { GetEmployeesQuery } from '../schemas/employee.schema.js';
+import { Currency } from '../../../generated/prisma/client.js';
 
 export class EmployeeService {
   constructor(private readonly employeeRepository: EmployeeRepository) {}

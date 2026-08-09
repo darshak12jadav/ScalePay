@@ -1,6 +1,6 @@
-import { ExchangeRateRepository } from '../repositories/exchange-rate.repository';
-import { BadRequestError, NotFoundError } from '../../../shared/errors/app-errors';
-import { Currency } from '../../../generated/prisma/client';
+import { ExchangeRateRepository } from '../repositories/exchange-rate.repository.js';
+import { BadRequestError, NotFoundError } from '../../../shared/errors/app-errors.js';
+import { Currency } from '../../../generated/prisma/client.js';
 
 export class ExchangeRateService {
   constructor(private readonly exchangeRateRepository: ExchangeRateRepository) {}

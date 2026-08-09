@@ -1,7 +1,7 @@
 import { Router } from 'express';
-import { payrollController } from '../controllers/payroll.controller';
-import { validateBody } from '../../../middleware/validate';
-import { calculatePayrollSchema } from '../schemas/payroll.schema';
+import { payrollController } from '../controllers/payroll.controller.js';
+import { validateBody } from '../../../middleware/validate.js';
+import { calculatePayrollSchema } from '../schemas/payroll.schema.js';
 
 const router = Router();
 

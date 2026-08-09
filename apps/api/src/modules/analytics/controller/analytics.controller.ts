@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction } from 'express';
-import { analyticsService } from '../index';
+import { analyticsService } from '../index.js';
 
 export class AnalyticsController {
   async getSummary(_req: Request, res: Response, next: NextFunction) {

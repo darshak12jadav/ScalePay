@@ -1,7 +1,7 @@
 import { Router } from 'express';
-import { salaryController } from '../controllers/salary.controller';
-import { validateBody, validateParams } from '../../../middleware/validate';
-import { createSalarySchema, employeeIdParamSchema } from '../schemas/salary.schema';
+import { salaryController } from '../controllers/salary.controller.js';
+import { validateBody, validateParams } from '../../../middleware/validate.js';
+import { createSalarySchema, employeeIdParamSchema } from '../schemas/salary.schema.js';
 
 const router = Router({ mergeParams: true });
 

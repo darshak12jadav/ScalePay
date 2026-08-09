@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction } from 'express';
-import { payrollService } from '../index';
+import { payrollService } from '../index.js';
 
 export class PayrollController {
   async calculatePayroll(req: Request, res: Response, next: NextFunction) {

@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction } from 'express';
-import { employeeService } from '../index';
+import { employeeService } from '../index.js';
 export class EmployeeController {
   async getEmployees(req: Request, res: Response, next: NextFunction) {
     try {

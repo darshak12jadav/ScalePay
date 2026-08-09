@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from 'express';
-import { exchangeRateService } from '../index';
-import { Currency } from '../../../generated/prisma/client';
+import { exchangeRateService } from '../index.js';
+import { Currency } from '../../../generated/prisma/client.js';
 
 export class ExchangeRateController {
   async getExchangeRates(_req: Request, res: Response, next: NextFunction) {

@@ -1,7 +1,7 @@
 import { Router } from 'express';
-import { exchangeRateController } from '../controllers/exchange-rate.controller';
-import { validateParams } from '../../../middleware/validate';
-import { currencyParamSchema } from '../schemas/exchange-rate.schema';
+import { exchangeRateController } from '../controllers/exchange-rate.controller.js';
+import { validateParams } from '../../../middleware/validate.js';
+import { currencyParamSchema } from '../schemas/exchange-rate.schema.js';
 
 const router = Router();
 

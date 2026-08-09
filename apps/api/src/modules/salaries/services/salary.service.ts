@@ -1,7 +1,7 @@
-import { SalaryRepository } from '../repositories/salary.repository';
-import { EmployeeRepository } from '../../employees/repositories/employee.repository';
-import { NotFoundError, BadRequestError } from '../../../shared/errors/app-errors';
-import { CreateSalaryInput } from '../schemas/salary.schema';
+import { SalaryRepository } from '../repositories/salary.repository.js';
+import { EmployeeRepository } from '../../employees/repositories/employee.repository.js';
+import { NotFoundError, BadRequestError } from '../../../shared/errors/app-errors.js';
+import { CreateSalaryInput } from '../schemas/salary.schema.js';
 
 export class SalaryService {
   constructor(

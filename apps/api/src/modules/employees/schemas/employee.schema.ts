@@ -1,6 +1,6 @@
 import { z } from 'zod';
 
-import { Currency } from '../../../generated/prisma/client';
+import { Currency } from '../../../generated/prisma/client.js';
 
 export const employmentStatusEnum = z.enum(['ACTIVE', 'ON_LEAVE', 'INACTIVE']);
 

@@ -1,14 +1,14 @@
 import { Router } from 'express';
-import { employeeController } from '../controllers/employee.controller';
-import { validateBody, validateParams, validateQuery } from '../../../middleware/validate';
+import { employeeController } from '../controllers/employee.controller.js';
+import { validateBody, validateParams, validateQuery } from '../../../middleware/validate.js';
 import {
   createEmployeeSchema,
   createEmployeeWithSalarySchema,
   updateEmployeeSchema,
   employeeIdParamSchema,
   getEmployeesQuerySchema,
-} from '../schemas/employee.schema';
-import { salaryRoutes } from '../../salaries/routes/salary.routes';
+} from '../schemas/employee.schema.js';
+import { salaryRoutes } from '../../salaries/routes/salary.routes.js';
 
 const router = Router();
 

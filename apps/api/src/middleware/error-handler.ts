@@ -1,5 +1,5 @@
 import { NextFunction, Request, Response } from 'express';
-import { NotFoundError, ConflictError, BadRequestError } from '../shared/errors/app-errors';
+import { NotFoundError, ConflictError, BadRequestError } from '../shared/errors/app-errors.js';
 
 export function errorHandler(err: Error, _req: Request, res: Response, _next: NextFunction) {
   if (err instanceof NotFoundError) {
