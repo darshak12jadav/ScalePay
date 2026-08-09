@@ -321,12 +321,11 @@ Demo: https://drive.google.com/file/d/1rQC7ZSp5AAQLiFaoNAqfiZuGt8cHbHl0/view?usp
 
 Add the demo Images here:
 
-```text
 ![ScalePay Dashboard](docs/images/image.png)
 ![ScalePay Dashboard](docs/images/image1.png)
 ![ScalePay Dashboard](docs/images/image4.png)
 ![ScalePay Dashboard](docs/images/image3.png)
-```
+
 
 ## Engineering Principles
 
