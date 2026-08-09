@@ -319,11 +319,13 @@ Add the demo video here:
 Demo: https://drive.google.com/file/d/1rQC7ZSp5AAQLiFaoNAqfiZuGt8cHbHl0/view?usp=sharing
 ```
 
-Add the demo video here:
+Add the demo Images here:
 
 ```text
-Demo: ![alt text](image.png)
-![alt text](image-1.png)
+![ScalePay Dashboard](docs/images/image.png)
+![ScalePay Dashboard](docs/images/image1.png)
+![ScalePay Dashboard](docs/images/image4.png)
+![ScalePay Dashboard](docs/images/image3.png)
 ```
 
 ## Engineering Principles
