@@ -186,37 +186,81 @@ Do not commit real secrets.
 
 ## Database Setup
 
-Validate Prisma:
+Validate the Prisma schema:
 
 ```bash
-pnpm exec prisma validate
+pnpm --filter api exec prisma validate
 ```
 
-Format the schema:
+Format the Prisma schema:
 
 ```bash
-pnpm exec prisma format
+pnpm --filter api exec prisma format
 ```
 
-Generate the Prisma client:
+Generate the Prisma Client:
 
 ```bash
-pnpm prisma generate
+pnpm --filter api exec prisma generate
 ```
 
-Run migrations:
+### Local Database Migrations
+
+For a **new local database**, create the initial migration:
 
 ```bash
-pnpm prisma migrate dev --name init
+pnpm --filter api exec prisma migrate dev --name init
 ```
 
-Open Prisma Studio:
+> **Important:** Run `migrate dev --name init` only when creating the initial migration. If the `init` migration already exists in `prisma/migrations`, do not run it again.
+
+If you change the Prisma schema later, create a new migration with a descriptive name:
+
+```bash
+pnpm --filter api exec prisma migrate dev --name <migration-name>
+```
+
+For example:
+
+```bash
+pnpm --filter api exec prisma migrate dev --name add_exchange_rates
+```
+
+Commit the generated migration files:
+
+```bash
+git add prisma/migrations
+```
+
+```bash
+git commit -m "chore: add database migration"
+```
+
+### Production Database Migrations
+
+Production migrations are handled by the GitHub Actions **Production Migration** workflow.
+
+The workflow runs:
+
+```bash
+pnpm --filter api exec prisma migrate deploy
+```
+
+`migrate deploy` applies committed migrations that have not yet been applied to the production PostgreSQL database.
+
+> **Important:** Do not use `migrate dev` against the production database.
+
+### Prisma Studio
+
+Open Prisma Studio to inspect the database:
 
 ```bash
 pnpm --filter api exec prisma studio
 ```
 
-Seed the database:
+### Seed Database
+
+To populate the database with the application's demo data:
 
 ```bash
 pnpm --filter api db:seed
@@ -224,18 +268,14 @@ pnpm --filter api db:seed
 
 The seed script creates approximately 10,000 employees and related salary/reference data required by the application.
 
+Production seeding is performed manually through the GitHub Actions **Seed Production Database** workflow rather than automatically on every deployment.
+
 ## Run Locally
 
-Start the API:
+### Start the API
 
 ```bash
 pnpm --filter api dev
-```
-
-Start the web application:
-
-```bash
-pnpm --filter web dev
 ```
 
 Expected API:
@@ -244,10 +284,82 @@ Expected API:
 http://localhost:4000
 ```
 
+Health check:
+
+```text
+http://localhost:4000/health
+```
+
+### Start the Web Application
+
+```bash
+pnpm --filter web dev
+```
+
 Expected frontend:
 
 ```text
 http://localhost:3000
+```
+
+### Typical First-Time Local Setup
+
+For a fresh development environment:
+
+```bash
+pnpm install
+```
+
+```bash
+pnpm --filter api exec prisma generate
+```
+
+```bash
+pnpm --filter api exec prisma migrate dev --name init
+```
+
+```bash
+pnpm --filter api db:seed
+```
+
+Start the API:
+
+```bash
+pnpm --filter api dev
+```
+
+In another terminal, start the web application:
+
+```bash
+pnpm --filter web dev
+```
+
+After the initial migration has been created, **do not run `migrate dev --name init` again**.
+
+When the Prisma schema changes, create a new migration with an appropriate name:
+
+```bash
+pnpm --filter api exec prisma migrate dev --name <migration-name>
+```
+
+Commit the migration and push it to GitHub:
+
+```bash
+git add prisma/migrations
+```
+
+```bash
+git commit -m "chore: add database migration"
+```
+
+```bash
+git push
+```
+
+The GitHub Actions **Production Migration** workflow then applies the committed migration to the production database using:
+
+```bash
+pnpm --filter api exec prisma migrate deploy
 ```
 
 ## Health Check
