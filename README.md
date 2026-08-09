@@ -310,13 +310,20 @@ Also verify:
 Add the final deployed URL here:
 
 ```text
-Production: <DEPLOYED_URL>
+Production: https://scale-pay-web.vercel.app/
 ```
 
 Add the demo video here:
 
 ```text
-Demo: <VIDEO_URL>
+Demo: https://drive.google.com/file/d/1rQC7ZSp5AAQLiFaoNAqfiZuGt8cHbHl0/view?usp=sharing
+```
+
+Add the demo video here:
+
+```text
+Demo: ![alt text](image.png)
+![alt text](image-1.png)
 ```
 
 ## Engineering Principles
